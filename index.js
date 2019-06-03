@@ -1282,7 +1282,7 @@ var lighterhtml = (function (document,exports) {
   }; // generic content render
 
   function render(node) {
-    var value = update.apply(this, arguments);
+    var value = update.apply(this, Array.prototype.slice.call(arguments));
 
     if (container.get(node) !== value) {
       container.set(node, value);
@@ -1370,7 +1370,7 @@ var lighterhtml = (function (document,exports) {
     var prev = current;
     current = wm.get(reference) || set(reference);
     current.i = 0;
-    var ret = callback.apply(this, arguments.slice(2));
+    var ret = callback.apply(this, Array.prototype.slice.call(arguments).slice(2));
     var value;
 
     if (ret instanceof Hole) {
