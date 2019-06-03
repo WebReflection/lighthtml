@@ -1367,13 +1367,10 @@ var lighterhtml = (function (document,exports) {
   }
 
   function update(reference, callback) {
-    var reference = arguments[0];
-    var callback = arguments[1];
-    arguments.splice(0, 2, this);
     var prev = current;
     current = wm.get(reference) || set(reference);
     current.i = 0;
-    var ret = callback.apply(arguments);
+    var ret = callback.apply(this, arguments.slice(2));
     var value;
 
     if (ret instanceof Hole) {
