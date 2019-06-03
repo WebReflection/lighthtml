@@ -1281,8 +1281,10 @@ var lighterhtml = (function (document,exports) {
     };
   }; // generic content render
 
-  function render(node, callback) {
-    var value = update.call(this, node, callback);
+  function render() {
+    var node = arguments[0];
+    arguments.unshift(this);
+    var value = update.apply(arguments);
 
     if (container.get(node) !== value) {
       container.set(node, value);
@@ -1367,10 +1369,13 @@ var lighterhtml = (function (document,exports) {
   }
 
   function update(reference, callback) {
+    var reference = arguments[0];
+    var callback = arguments[1];
+    arguments.splice(0, 2, this);
     var prev = current;
     current = wm.get(reference) || set(reference);
     current.i = 0;
-    var ret = callback.call(this);
+    var ret = callback.apply(arguments);
     var value;
 
     if (ret instanceof Hole) {
