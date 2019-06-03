@@ -1281,10 +1281,8 @@ var lighterhtml = (function (document,exports) {
     };
   }; // generic content render
 
-  function render() {
-    var node = arguments[0];
-    arguments.unshift(this);
-    var value = update.apply(arguments);
+  function render(node) {
+    var value = update.apply(this, arguments);
 
     if (container.get(node) !== value) {
       container.set(node, value);
