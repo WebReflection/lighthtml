@@ -6,7 +6,7 @@ interface Tag<T> extends TemplateFunction<any> {
 
 export declare const html: Tag<HTMLElement>;
 export declare const svg: Tag<SVGElement>;
-export declare function render(node: HTMLElement, renderer: () => any): any;
+export declare function render(node: HTMLElement, renderer: (...args) => any, ...rendererArgs: any[]): any;
 export declare function hook(hook: Function) : {
   html: Tag<HTMLElement>
   svg: Tag<SVGElement>
