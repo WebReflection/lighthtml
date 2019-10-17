@@ -838,13 +838,14 @@ var lighterhtml = (function (document,exports) {
         /* istanbul ignore else */
 
         if (!cache.has(name)) {
-          var realName = parts.shift().replace(direct ? /^(?:|[\S\s]*?\s)(\S+?)\s*=\s*('|")?$/ : // TODO: while working on yet another IE/Edge bug I've realized
-          //        the current not direct logic easily breaks there
-          //        because the `name` might not be the real needed one.
-          //        Use a better RegExp to find last attribute instead
-          //        of trusting `name` is what we are looking for.
-          //        Thanks IE/Edge, I hate you both.
-          new RegExp('^(?:|[\\S\\s]*?\\s)(' + name + ')\\s*=\\s*(\'|")', 'i'), '$1');
+          var realName;
+          if (direct) {
+            realName = parts.shift().replace(/^(?:|[\S\s]*?\s)(\S+?)\s*=\s*('|")?$/, '$1');
+          } else {
+            var part = parts.shift();
+            var regex = new RegExp(`^(?:|[\\S\\s]*?\\s)(${name})\\s*=\\s*('|")`, 'i');
+            realName = part.replace(regex, '$1').replace(part.replace(regex, '$2').slice(1), '');
+          }
           var value = attributes[realName] || // the following ignore is covered by browsers
           // while basicHTML is already case-sensitive
 
