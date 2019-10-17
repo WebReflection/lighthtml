@@ -842,6 +842,7 @@ var lighterhtml = (function (document,exports) {
           if (direct) {
             realName = parts.shift().replace(/^(?:|[\S\s]*?\s)(\S+?)\s*=\s*('|")?$/, '$1');
           } else {
+            // TODO: improve current regex so that we don't need to use "replace" 3 times...
             var part = parts.shift();
             var regex = new RegExp(`^(?:|[\\S\\s]*?\\s)(${name})\\s*=\\s*('|")`, 'i');
             realName = part.replace(regex, '$1').replace(part.replace(regex, '$2').slice(1), '');
