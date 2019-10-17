@@ -822,7 +822,11 @@ var lighterhtml = (function (document,exports) {
     var cache = new Map$1();
     var attributes = node.attributes;
     var remove = [];
-    var array = remove.slice.call(attributes, 0);
+    var html = parts.join('');
+    // This is a fix for returning an ordered list of attributes (IE and Edge don't)
+    var array = remove.slice.call(attributes, 0).sort(function(left, right) {
+      return html.indexOf(left.name) <= html.indexOf(right.name) ? -1 : 1;
+    })
     var length = array.length;
     var i = 0;
 
